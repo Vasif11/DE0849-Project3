@@ -9,7 +9,7 @@
 | Scenario | Topic | Status |
 |---|---|---|
 | **A** | SDN deployment, measurement and observability: Mininet + Open vSwitch + Dockerized OS-Ken controller | **complete - Phases 1-10 executed with evidence** |
-| **B** | O-RAN intelligent RAN monitoring (OCUDU gNB, srsUE, Open5GS, FlexRIC, KPM / Edge-AI / RM xApps) | see [Scenario B status](#scenario-b-status) |
+| **B** | O-RAN intelligent RAN monitoring (OCUDU gNB, srsUE, Open5GS, FlexRIC, KPM / Edge-AI / RM xApps) | **incomplete** - core, FlexRIC, gNB N2/F1 verified; UE radio link and all xApp phases not achieved on the 4 GB host, see [Scenario B status](#scenario-b-status) |
 
 Repository layout: `scenario-a/{topology,controller,measurement,scripts,results,figures}`. Every number below
 comes from a file under `scenario-a/results/` produced by the scripts in this repository.
@@ -154,5 +154,29 @@ Early runs without the warm-up and without stable snapshots produced misleading 
 
 # Scenario B status
 
-<!-- updated below -->
-Not yet executed in this commit. Candidate components were checked: `aetherproject/ocudu:rel-0.7.0`, `aetherproject/srsran-ue:rel-0.7.0` and `oaisoftwarealliance/oai-flexric:develop` are available on Docker Hub; whether the OCUDU build exposes the E2 agent and E2SM-KPM/RC compatible with this FlexRIC version still has to be verified on the 4 GB host.
+**Scenario B is NOT complete.** The O-RAN infrastructure was built and brought up as far as the lab host
+allowed; the srsUE ↔ OCUDU radio link over ZeroMQ never started, so there is no UE attach, no E2 setup, and
+therefore **no KPM, Edge-AI or Resource-Management results**. Nothing below Phase 5 was executed, and no
+measurement from Scenario B is reported anywhere in this repository.
+
+| Phase | Result | Evidence |
+|---|---|---|
+| 1 Project 2 5G core | **done** - AMF/SMF/UPF and all NFs running; N2 `10.20.2.12`, N3 `10.20.3.14`, N4 `10.20.5.13/.14`, N6 `10.20.6.14` as in the guidebook; IMSI `001010000000001` / DNN `internet` provisioned; AMF listening on NGAP 38412 | [core_verification.txt](scenario-b/results/phase1/core_verification.txt) |
+| 2 RAN network + containers | **done** - `project3-ric-lab_ran-net` `10.20.11.0/24`; gNB `10.20.11.10` (+ `10.20.2.11` N2, `10.20.3.11` N3), srsUE `10.20.11.20`, FlexRIC `10.20.11.30`, iperf3 endpoint `10.20.6.21` | [ran_network.txt](scenario-b/results/phase2/ran_network.txt) |
+| 3 FlexRIC | **done** - built from source (`telecom-lab-flexric:1.0`, FlexRIC `br-flexric` commit `73650812`, E2AP v2, KPM v3.00); starts on `10.20.11.30`, SCTP **36421 (E2)** and **36422 (E42)** listening; service models loaded: **KPM = RAN function 2, RC = RAN function 3** (as in the guidebook) | [flexric.txt](scenario-b/results/phase3/flexric.txt) |
+| 4 OCUDU gNB | **partly** - OCUDU gNB 26.04.0 (`050a2bb`, image `aetherproject/ocudu:rel-0.7.0`): cell configured (n3, ARFCN 368500, 10 MHz, 15 kHz, PCI 1, 1T1R), **N2 up** (`NGSetupRequest/Response`, AMF "gNB-N2 accepted [10.20.2.11]"), **E1 and F1 setup complete**, `Cell scheduling was activated`. **E2 association to FlexRIC: not established** | [gnb_bringup.txt](scenario-b/results/phase4/gnb_bringup.txt) |
+| 5 srsUE | **failed** - srsUE (`eea87b1`) starts, the two ZeroMQ TCP links (gNB `tx` 2000 ← UE, UE `tx` 2001 ← gNB) are `ESTABLISHED`, `NAS5G Switching on`, but the UE stays at `Attaching UE...`; no sample traffic is exchanged | [ue_attach.txt](scenario-b/results/phase5/ue_attach.txt) |
+| 6-10 xApps | **not executed** | - |
+
+### Why it stopped (diagnosed, not guessed)
+1. **Radio link deadlock.** With both sides up and the ZeroMQ sockets connected, a 5 s capture on the RAN bridge shows **0 ZeroMQ packets**, and the gNB `radio` and UE `SYNC` threads sit idle (CPU ≈ 7 %): the lock-step sample exchange never starts. Changing the start order (UE first or gNB first) did not help. The gNB log also reports `Worker pool "main_pool" instantiated with #workers=1` on this 4-vCPU WSL VM. I did not find the root cause; the most likely factors are the single-worker real-time pipeline and CPU/memory starvation, but that is **a hypothesis, not a result**.
+2. **Memory.** The OCUDU gNB alone uses ≈ 2.1-2.5 GiB RSS; with the core (~1 GB) and srsUE (~0.7 GB) the 4 GB WSL VM swaps (≈ 400 MB swap in use). The guidebook's Scenario B assumes a larger host.
+3. **E2.** No E2 association ever appeared at the RIC and the gNB log (info level) contains no E2 message, so I cannot say whether the E2 agent tried to connect. The FlexRIC/OCUDU E2AP/KPM compatibility - a real risk with this FlexRIC version - therefore remains **untested**.
+
+### Environment pitfalls found (useful for anyone repeating this on WSL2)
+* **The WSL distro shuts down shortly after the last `wsl.exe` session ends**; `systemd` then stops `docker.service` and every container without a restart policy exits with code 255 ("Could not stop application after 5 seconds"). Early gNB/RIC "crashes" were this artefact. Keep one session open (e.g. `wsl -d Ubuntu -- sleep infinity`) while the RAN stack runs.
+* FlexRIC does not build with the default `gcc-11` of Ubuntu 22.04 (internal compiler error on the `_Generic` decoder macros); the image therefore uses `gcc-12`, `pkg-config`, `libconfig-dev`, and builds only the KPM and RC service models.
+* The srsUE version in the image rejects `pcap.mac_enable` (use `[pcap] enable = none`); the gNB binary is called `gnb`, not `ocudu-gnb`; gNB/UE file logs are buffered, so use `filename: stdout`.
+
+### What is ready for a host with more resources
+`scenario-b/docker-compose.yml`, `configs/gnb_zmq.yaml`, `configs/ue_zmq.conf`, `configs/flexric.conf`, the FlexRIC `Dockerfile`, the N6 iperf3 endpoint image and `scripts/b01_core_up.sh` / `b03_bringup_evidence.sh`. The KPM xApp configurations for Phase 6 (`xapp_kpm_phase6.conf`: format 1, `ngran_gNB_DU`, `DRB.UEThpDl`, `DRB.UEThpUl`, 1000 ms) and Phase 7 (`xapp_kpm_phase7.conf`: adds `RRU.PrbTotDl`, `RRU.PrbTotUl`, `DRB.RlcSduDelayDl`) are written for FlexRIC's `xapp_oran_moni` **but have never been run**. The Edge-AI and Resource-Management xApps (Phases 8-9) were not started.

@@ -1,0 +1,41 @@
+# Phase 5 - srsUE over ZeroMQ (2026-11-26T06:28:25+02:00)
+--- UE log
+Reading configuration file /config/ue_zmq.conf...
+
+Built in Release mode using commit eea87b1 on branch HEAD.
+
+2026-11-26T04:27:03.486457 [UE     ] [I] Using binary srsue with arguments: /config/ue_zmq.conf 
+2026-11-26T04:27:03.682864 [UE     ] [I] Built in Release mode using commit eea87b1 on branch HEAD.
+Opening 1 channels in RF device=zmq with args=tx_port=tcp://10.20.11.20:2001,rx_port=tcp://10.20.11.10:2000,base_srate=11.52e6
+Supported RF device list: <none>
+CHx base_srate=11.52e6
+2026-11-26T04:27:03.928164 [RF     ] [I] Configuring physical DL channel 0 with band-pass filter (0.0, 0.0)
+2026-11-26T04:27:03.928165 [RF     ] [I] Configuring physical UL channel 0 with band-pass filter (0.0, 0.0)
+Current sample rate is 1.92 MHz with a base rate of 11.52 MHz (x6 decimation)
+CH0 rx_port=tcp://10.20.11.10:2000
+CH0 tx_port=tcp://10.20.11.20:2001
+Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
+Current sample rate is 11.52 MHz with a base rate of 11.52 MHz (x1 decimation)
+2026-11-26T04:27:05.536108 [MAC    ] [I] [    0] Resetting MAC
+2026-11-26T04:27:05.536241 [MAC    ] [I] [    0] Logical Channel Setup: LCID=0, LCG=0, priority=0, PBR=-1, BSD=50ms, bucket_size=0
+2026-11-26T04:27:05.536332 [MAC    ] [I] [    0] Logical Channel Setup: LCID=1, LCG=0, priority=1, PBR=-1, BSD=50ms, bucket_size=0
+2026-11-26T04:27:05.536428 [MAC    ] [I] [    0] Setting configuration
+2026-11-26T04:27:05.536458 [MAC    ] [I] [    0] BSR:   Configured timer reTX 2560 ms
+2026-11-26T04:27:05.538547 [RLC    ] [I] Added LTE radio bearer with LCID 0 in Transparent Mode
+2026-11-26T04:27:05.538761 [USIM   ] [I] Read Home PLMN Id=00101
+2026-11-26T04:27:05.669806 [RLC-NR ] [I] Added LTE radio bearer with LCID 0 in Transparent Mode
+2026-11-26T04:27:05.669965 [MAC-NR ] [I] [    0] Logical Channel Setup: LCID=0, LCG=0, priority=0, PBR=0, BSD=0ms, bucket_size=0
+2026-11-26T04:27:05.670281 [RRC    ] [I] using srand seed of 670251
+Waiting PHY to initialize ... done!
+Attaching UE...
+2026-11-26T04:27:08.191662 [STCK   ] [I] Triggering NAS switch on
+2026-11-26T04:27:08.191696 [NAS5G  ] [I] Switching on
+--- ZeroMQ TCP links (gNB tx 2000 <- UE rx, UE tx 2001 <- gNB rx)
+  project3-gnb: 10.20.11.10:2000 -> 0.0.0.0:0 LISTEN
+  project3-gnb: 10.20.11.10:2000 -> 10.20.11.20:55442 ESTABLISHED
+  project3-gnb: 10.20.11.10:54016 -> 10.20.11.20:2001 ESTABLISHED
+  project3-ue: 10.20.11.20:2001 -> 0.0.0.0:0 LISTEN
+  project3-ue: 10.20.11.20:55442 -> 10.20.11.10:2000 ESTABLISHED
+  project3-ue: 10.20.11.20:2001 -> 10.20.11.10:54016 ESTABLISHED
+ZeroMQ packets observed on the RAN bridge in 5 s: 0
+UE IP address in netns ue1: none (UE not attached)

@@ -1,0 +1,46 @@
+# Phase 1 - Project 2 5G core (2026-11-26T06:14:56+02:00)
+
+## core network functions
+scenario-b-amf: running
+scenario-b-smf: running
+scenario-b-upf: running
+scenario-b-nrf: running
+scenario-b-scp: running
+scenario-b-ausf: running
+scenario-b-udm: running
+scenario-b-udr: running
+scenario-b-pcf: running
+scenario-b-nssf: running
+scenario-b-bsf: running
+scenario-b-mongodb: running
+
+## networks (expected N2 10.20.2.0/24, N3 10.20.3.0/24, N4 10.20.5.0/24, SBI 10.20.4.0/24, N6 10.20.6.0/24)
+scenario-b-n2: 10.20.2.0/24
+scenario-b-n3: 10.20.3.0/24
+scenario-b-n4: 10.20.5.0/24
+scenario-b-sbi: 10.20.4.0/24
+scenario-b-dn: 10.20.6.0/24
+
+## interface addresses
+AMF N2: 10.20.2.12
+UPF N3: 10.20.3.14
+SMF N4: 10.20.5.13   UPF N4: 10.20.5.14
+UPF N6: 10.20.6.14
+
+## subscriber database (IMSI used by srsUE: 001010000000001, DNN internet)
+{
+  imsi: '001010000000001',
+  slice: [
+    {
+      session: [
+        {
+          name: 'internet'
+        }
+      ]
+    }
+  ]
+}
+
+## AMF NGAP listener
+[32m11/26 04:14:36.339[0m: [[33mamf[0m] [1;32mINFO[0m: ngap_server() [10.20.2.12]:38412 (../src/amf/ngap-sctp.c:61)
+[32m11/26 04:14:36.339[0m: [[33msctp[0m] [1;32mINFO[0m: AMF initialize...done (../src/amf/app.c:33)

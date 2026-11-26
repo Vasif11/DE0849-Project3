@@ -1,0 +1,4 @@
+# Phase 4 - OCUDU gNB (2026-11-26T05:52:28+02:00)
+running project3-ric-lab_ran-net=10.20.11.10 scenario-b-n2=10.20.2.11 scenario-b-n3=10.20.3.11 
+--- gNB log
+--- RIC log (E2 setup)

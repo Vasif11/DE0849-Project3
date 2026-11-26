@@ -1,0 +1,54 @@
+# Phase 4 - OCUDU gNB (2026-11-26T06:28:23+02:00)
+gNB version: OCUDU 5G gNB version 26.04.0 (050a2bb)
+gnb command (image provides the binary 'gnb'; the guidebook calls it ocudu-gnb): gnb -c /config/gnb_zmq.yaml
+interfaces: project3-ric-lab_ran-net=10.20.11.10 scenario-b-n2=10.20.2.11 scenario-b-n3=10.20.3.11 
+--- gNB log (non-JSON lines)
+2026-11-26T04:26:42.719786 [GNB     ] [I] Built in Release mode using commit 050a2bb on branch HEAD
+2026-11-26T04:26:52.170839 [GNB     ] [W] Could not check scaling governor. filename=/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor error=No such file or directory
+2026-11-26T04:26:52.172261 [GNB     ] [W] DRM KMS polling is enabled, which may hinder performance. You can disable it using the "ocudu_performance" script
+Lower PHY in executor sequential baseband mode.
+2026-11-26T04:26:52.349349 [GTPU    ] [I] GTP-U demux. queue_size=2046 batch_size=256 warn_on_drop=false test_mode=false
+2026-11-26T04:26:52.350450 [GTPU    ] [I] Tunnel added. teid=0x000000
+2026-11-26T04:26:53.076681 [DU-MNG  ] [I] The upper-bound on the number of UEs supported by cell {pci=1, du_cell_index=0} is 160 (the actual number might be lower than that). This is determined by the lowest of
+2026-11-26T04:26:53.084192 [DU      ] [I] DU created successfully
+2026-11-26T04:26:53.084262 [DU      ] [I] O-DU created successfully
+Available radio types: uhd and zmq.
+2026-11-26T04:26:53.199998 [zmq:tx:0:0] [I] Binding to address tcp://10.20.11.10:2000.
+2026-11-26T04:26:53.293402 [zmq:rx:0:0] [I] Connecting to address tcp://10.20.11.20:2001.
+Cell pci=1, bw=10 MHz, 1T1R, dl_arfcn=368500 (n3), dl_freq=1842.5 MHz, dl_ssb_arfcn=367930, ul_freq=1747.5 MHz
+2026-11-26T04:26:54.367047 [GNB     ] [I] SSB derived parameters for cell: 1, band: 3, dl_arfcn:368500, nof_crbs: 52 scs:15kHz, ssb_scs:15kHz:
+2026-11-26T04:26:54.367567 [GNB     ] [I] Starting CU-CP...
+N2: Connection to AMF on 10.20.2.12:38412 completed
+2026-11-26T04:26:54.375585 [CU-CP   ] [I] N2: Connection to AMF on 10.20.2.12:38412 was established
+2026-11-26T04:26:54.379519 [NGAP    ] [I] Tx PDU: NGSetupRequest
+2026-11-26T04:26:54.409644 [NGAP    ] [I] Rx PDU: NGSetupResponse
+2026-11-26T04:26:54.410638 [CU-CP   ] [I] Connected to AMF. Supported PLMNs: 00101 
+2026-11-26T04:26:54.410697 [GNB     ] [I] CU-CP started successfully
+2026-11-26T04:26:54.410813 [CU-UP   ] [I] CU-UP starting...
+2026-11-26T04:26:54.413886 [CU-UP-E1] [I] Sending E1SetupRequest
+2026-11-26T04:26:54.414717 [CU-UP-E1] [I] Tx PDU tid=0: GNB-CU-UP-E1SetupRequest
+2026-11-26T04:26:54.415252 [CU-CP   ] [I] Added TNL connection to CU-UP 0
+2026-11-26T04:26:54.415448 [CU-CP-E1] [I] Rx PDU tid=0: GNB-CU-UP-E1SetupRequest
+2026-11-26T04:26:54.415673 [CU-CP-E1] [I] Tx PDU tid=0: GNB-CU-UP-E1SetupResponse
+2026-11-26T04:26:54.415871 [CU-UP-E1] [I] Rx PDU tid=0: GNB-CU-UP-E1SetupResponse
+2026-11-26T04:26:54.415969 [CU-UP-E1] [I] "E1AP CU-UP Setup Procedure" finalized
+2026-11-26T04:26:54.416098 [CU-UP   ] [I] CU-UP started successfully
+2026-11-26T04:26:54.416108 [DU      ] [I] Starting DU...
+2026-11-26T04:26:54.416110 [DU      ] [I] Starting DU-High...
+2026-11-26T04:26:54.640859 [DU-MNG  ] [I] SIB1 cell=0: {
+2026-11-26T04:26:54.645010 [DU-F1   ] [I] F1 Setup: Sending F1 Setup Request to CU-CP...
+2026-11-26T04:26:54.645176 [DU-F1   ] [I] Tx PDU du=0 tid=0: F1SetupRequest
+2026-11-26T04:26:54.648195 [CU-CP   ] [I] Added TNL connection to DU 0
+2026-11-26T04:26:54.648828 [CU-CP-F1] [I] Rx PDU du=0 tid=0: F1SetupRequest
+2026-11-26T04:26:54.652958 [CU-CP-F1] [I] Tx PDU du=0 tid=0: F1SetupResponse
+2026-11-26T04:26:54.653080 [DU-F1   ] [I] Rx PDU du=0 tid=0: F1SetupResponse
+2026-11-26T04:26:54.653233 [DU-F1   ] [I] F1 Setup: Procedure completed successfully.
+2026-11-26T04:26:54.653640 [SCHED   ] [I] [     0.0] cell=0: Cell scheduling was activated.
+--- AMF view of the gNB
+11/26 04:26:54.376: [amf] INFO: gNB-N2 accepted[10.20.2.11] in master_sm module (../src/amf/amf-sm.c:818)
+11/26 04:26:54.404: [amf] INFO: [Added] Number of gNBs is now 1 (../src/amf/context.c:1277)
+--- SCTP associations seen by gNB (N2) / FlexRIC (E2)
+ ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS <-> RADDRS HBINT INS OUTS MAXRT T1X T2X 
+       0        0 0   7   3  0      23        0        0       0 607607 41390 38412  10.20.2.11 <-> *10.20.2.12 	    7500    30   
+RIC:
+ ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS <-> RADDRS HBINT INS OUTS MAXRT T1X T2X 

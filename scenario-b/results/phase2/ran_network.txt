@@ -1,0 +1,5 @@
+# Phase 2/3 - RAN network, FlexRIC (2026-11-26T06:26:34+02:00)
+network project3-ric-lab_ran-net subnet 10.20.11.0/24
+project3-flexric: running project3-ric-lab_ran-net=10.20.11.30 
+project3-dn-iperf3: running scenario-b-dn=10.20.6.21 
+images: telecom-lab-flexric:1.0 aetherproject/ocudu:rel-0.7.0 aetherproject/srsran-ue:rel-0.7.0 

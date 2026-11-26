@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+*.log
+# temporary captures are written to /tmp and copied in bounded form; keep only bounded samples
+*.rar

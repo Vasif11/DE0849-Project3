@@ -1,0 +1,36 @@
+# Phase 3 - Scenario A topology deployment
+
+switches: ['s1', 's2', 's3']
+hosts:    [('h1', '10.0.0.1'), ('h2', '10.0.0.2'), ('h3', '10.0.0.3'), ('h4', '10.0.0.4')]
+links created: 6 (expected 6)
+DPIDs: s1=0000000000000001, s2=0000000000000002, s3=0000000000000003
+port map (switch -> {port: neighbour}):
+  s1: {1: 'h1', 2: 'h2', 3: 's2'}
+  s2: {1: 's1', 2: 's3'}
+  s3: {1: 'h3', 2: 'h4', 3: 's2'}
+
+## TBF + netem queue structure on every switch-side interface
+[s1-eth1]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 10627535283018645052
+[s1-eth2]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 18133917925799929576
+[s1-eth3]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 1684157486368941235
+[s2-eth1]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 5355893367420308295
+[s2-eth2]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 12188103430867730998
+[s3-eth1]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 10164796338972590808
+[s3-eth2]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 12879750479384111705
+[s3-eth3]
+qdisc tbf 5: root refcnt 5 rate 100Mbit burst 15000b lat 1.2ms 
+qdisc netem 10: parent 5:1 limit 1000 delay 1ms seed 3282050878877292894

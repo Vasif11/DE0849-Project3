@@ -1,0 +1,126 @@
+# Phase 6 - learning-switch application
+
+## table-miss rule before any traffic (s1)
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=5.357s, table=0, n_packets=1, n_bytes=86, priority=0 actions=CONTROLLER:65535
+
+## h1 -> h4 first ping (controller-assisted discovery)
+PING 10.0.0.4 (10.0.0.4) 56(84) bytes of data.
+64 bytes from 10.0.0.4: icmp_seq=1 ttl=64 time=28.5 ms
+64 bytes from 10.0.0.4: icmp_seq=2 ttl=64 time=9.30 ms
+64 bytes from 10.0.0.4: icmp_seq=3 ttl=64 time=8.70 ms
+
+--- 10.0.0.4 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 8.704/15.492/28.475/9.183 ms
+
+## h1 -> h4 second ping (switch-local forwarding expected)
+PING 10.0.0.4 (10.0.0.4) 56(84) bytes of data.
+64 bytes from 10.0.0.4: icmp_seq=1 ttl=64 time=8.35 ms
+64 bytes from 10.0.0.4: icmp_seq=2 ttl=64 time=10.0 ms
+64 bytes from 10.0.0.4: icmp_seq=3 ttl=64 time=10.1 ms
+
+--- 10.0.0.4 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 8.353/9.494/10.132/0.808 ms
+
+PACKET_IN count: before=2  after-first-ping=11  after-second-ping=11
+new packet-ins caused by the second ping: 0 (0 means forwarding became switch-local)
+
+## pingall (all four hosts)
+pingall packet loss: 0.0%
+
+## flow table s1
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=4.294s, table=0, n_packets=10, n_bytes=924, priority=10,in_port=3,dl_dst=00:00:00:00:00:01 actions=output:1
+ cookie=0x0, duration=4.288s, table=0, n_packets=6, n_bytes=588, priority=10,in_port=1,dl_dst=00:00:00:00:00:04 actions=output:3
+ cookie=0x0, duration=0.183s, table=0, n_packets=2, n_bytes=196, priority=10,in_port=2,dl_dst=00:00:00:00:00:01 actions=output:1
+ cookie=0x0, duration=0.180s, table=0, n_packets=1, n_bytes=98, priority=10,in_port=1,dl_dst=00:00:00:00:00:02 actions=output:2
+ cookie=0x0, duration=0.118s, table=0, n_packets=4, n_bytes=336, priority=10,in_port=3,dl_dst=00:00:00:00:00:02 actions=output:2
+ cookie=0x0, duration=0.114s, table=0, n_packets=1, n_bytes=98, priority=10,in_port=2,dl_dst=00:00:00:00:00:03 actions=output:3
+ cookie=0x0, duration=0.082s, table=0, n_packets=0, n_bytes=0, priority=10,in_port=2,dl_dst=00:00:00:00:00:04 actions=output:3
+ cookie=0x0, duration=0.065s, table=0, n_packets=1, n_bytes=98, priority=10,in_port=1,dl_dst=00:00:00:00:00:03 actions=output:3
+ cookie=0x0, duration=9.705s, table=0, n_packets=15, n_bytes=954, priority=0 actions=CONTROLLER:65535
+
+## flow table s2
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=4.299s, table=0, n_packets=10, n_bytes=924, priority=10,in_port=2,dl_dst=00:00:00:00:00:01 actions=output:1
+ cookie=0x0, duration=4.289s, table=0, n_packets=7, n_bytes=686, priority=10,in_port=1,dl_dst=00:00:00:00:00:04 actions=output:2
+ cookie=0x0, duration=0.123s, table=0, n_packets=4, n_bytes=336, priority=10,in_port=2,dl_dst=00:00:00:00:00:02 actions=output:1
+ cookie=0x0, duration=0.114s, table=0, n_packets=2, n_bytes=196, priority=10,in_port=1,dl_dst=00:00:00:00:00:03 actions=output:2
+ cookie=0x0, duration=9.674s, table=0, n_packets=12, n_bytes=716, priority=0 actions=CONTROLLER:65535
+
+## flow table s3
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=4.305s, table=0, n_packets=7, n_bytes=686, priority=10,in_port=2,dl_dst=00:00:00:00:00:01 actions=output:3
+ cookie=0x0, duration=4.291s, table=0, n_packets=7, n_bytes=686, priority=10,in_port=3,dl_dst=00:00:00:00:00:04 actions=output:2
+ cookie=0x0, duration=0.175s, table=0, n_packets=2, n_bytes=196, priority=10,in_port=1,dl_dst=00:00:00:00:00:01 actions=output:3
+ cookie=0x0, duration=0.164s, table=0, n_packets=3, n_bytes=294, priority=10,in_port=3,dl_dst=00:00:00:00:00:03 actions=output:1
+ cookie=0x0, duration=0.130s, table=0, n_packets=2, n_bytes=196, priority=10,in_port=1,dl_dst=00:00:00:00:00:02 actions=output:3
+ cookie=0x0, duration=0.095s, table=0, n_packets=1, n_bytes=98, priority=10,in_port=2,dl_dst=00:00:00:00:00:02 actions=output:3
+ cookie=0x0, duration=0.047s, table=0, n_packets=1, n_bytes=98, priority=10,in_port=2,dl_dst=00:00:00:00:00:03 actions=output:1
+ cookie=0x0, duration=0.043s, table=0, n_packets=0, n_bytes=0, priority=10,in_port=1,dl_dst=00:00:00:00:00:04 actions=output:2
+ cookie=0x0, duration=9.649s, table=0, n_packets=14, n_bytes=756, priority=0 actions=CONTROLLER:65535
+
+## controller log (SWITCH/LEARN/FLOOD/FLOW_MOD excerpt)
+SWITCH_CONNECT dpid=0000000000000001 ofp_version=0x4 n_tables=254
+TABLE_MISS dpid=0000000000000001 installed priority=0 -> controller
+SWITCH_CONNECT dpid=0000000000000002 ofp_version=0x4 n_tables=254
+TABLE_MISS dpid=0000000000000002 installed priority=0 -> controller
+SWITCH_CONNECT dpid=0000000000000003 ofp_version=0x4 n_tables=254
+TABLE_MISS dpid=0000000000000003 installed priority=0 -> controller
+LEARN dpid=0000000000000002 mac=56:9a:64:f1:fe:fb port=2
+FLOOD dpid=0000000000000002 dst=33:33:ff:f1:fe:fb unknown
+LEARN dpid=0000000000000001 mac=56:9a:64:f1:fe:fb port=3
+FLOOD dpid=0000000000000001 dst=33:33:ff:f1:fe:fb unknown
+LEARN dpid=0000000000000001 mac=00:00:00:00:00:01 port=1
+FLOOD dpid=0000000000000001 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000002 mac=00:00:00:00:00:01 port=1
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000003 mac=00:00:00:00:00:01 port=3
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000003 mac=00:00:00:00:00:04 port=2
+FLOW_MOD dpid=0000000000000003 match(in_port=2,eth_dst=00:00:00:00:00:01) -> output:3 priority=10
+LEARN dpid=0000000000000002 mac=00:00:00:00:00:04 port=2
+FLOW_MOD dpid=0000000000000002 match(in_port=2,eth_dst=00:00:00:00:00:01) -> output:1 priority=10
+LEARN dpid=0000000000000001 mac=00:00:00:00:00:04 port=3
+FLOW_MOD dpid=0000000000000001 match(in_port=3,eth_dst=00:00:00:00:00:01) -> output:1 priority=10
+FLOW_MOD dpid=0000000000000001 match(in_port=1,eth_dst=00:00:00:00:00:04) -> output:3 priority=10
+FLOW_MOD dpid=0000000000000002 match(in_port=1,eth_dst=00:00:00:00:00:04) -> output:2 priority=10
+FLOW_MOD dpid=0000000000000003 match(in_port=3,eth_dst=00:00:00:00:00:04) -> output:2 priority=10
+FLOOD dpid=0000000000000001 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000001 mac=00:00:00:00:00:02 port=2
+FLOW_MOD dpid=0000000000000001 match(in_port=2,eth_dst=00:00:00:00:00:01) -> output:1 priority=10
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+FLOW_MOD dpid=0000000000000001 match(in_port=1,eth_dst=00:00:00:00:00:02) -> output:2 priority=10
+FLOOD dpid=0000000000000001 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000003 mac=00:00:00:00:00:03 port=1
+FLOW_MOD dpid=0000000000000003 match(in_port=1,eth_dst=00:00:00:00:00:01) -> output:3 priority=10
+FLOOD dpid=0000000000000001 dst=00:00:00:00:00:03 unknown
+FLOOD dpid=0000000000000002 dst=00:00:00:00:00:03 unknown
+FLOW_MOD dpid=0000000000000003 match(in_port=3,eth_dst=00:00:00:00:00:03) -> output:1 priority=10
+FLOOD dpid=0000000000000001 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000002 mac=00:00:00:00:00:02 port=1
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+LEARN dpid=0000000000000003 mac=00:00:00:00:00:02 port=3
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+FLOW_MOD dpid=0000000000000003 match(in_port=1,eth_dst=00:00:00:00:00:02) -> output:3 priority=10
+LEARN dpid=0000000000000002 mac=00:00:00:00:00:03 port=2
+FLOW_MOD dpid=0000000000000002 match(in_port=2,eth_dst=00:00:00:00:00:02) -> output:1 priority=10
+LEARN dpid=0000000000000001 mac=00:00:00:00:00:03 port=3
+FLOW_MOD dpid=0000000000000001 match(in_port=3,eth_dst=00:00:00:00:00:02) -> output:2 priority=10
+FLOW_MOD dpid=0000000000000001 match(in_port=2,eth_dst=00:00:00:00:00:03) -> output:3 priority=10
+FLOW_MOD dpid=0000000000000002 match(in_port=1,eth_dst=00:00:00:00:00:03) -> output:2 priority=10
+FLOOD dpid=0000000000000001 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+FLOW_MOD dpid=0000000000000003 match(in_port=2,eth_dst=00:00:00:00:00:02) -> output:3 priority=10
+FLOW_MOD dpid=0000000000000001 match(in_port=2,eth_dst=00:00:00:00:00:04) -> output:3 priority=10
+FLOW_MOD dpid=0000000000000001 match(in_port=1,eth_dst=00:00:00:00:00:03) -> output:3 priority=10
+FLOOD dpid=0000000000000003 dst=ff:ff:ff:ff:ff:ff unknown
+FLOOD dpid=0000000000000002 dst=ff:ff:ff:ff:ff:ff unknown
+FLOW_MOD dpid=0000000000000003 match(in_port=2,eth_dst=00:00:00:00:00:03) -> output:1 priority=10
+... (62 such events in total)

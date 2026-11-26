@@ -1,0 +1,11 @@
+# Scenario A OS-Ken controller (host networking so OVS switches reach it on TCP 6633).
+# The controller must be running BEFORE the Mininet switches start.
+services:
+  osken:
+    build: ./controller
+    image: telecom-lab-osken:1.0
+    container_name: scenario-a-osken
+    network_mode: host
+    volumes:
+      - ./controller/learning_switch.py:/app/learning_switch.py:ro   # edit app without rebuilding
+    restart: unless-stopped

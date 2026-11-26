@@ -1,0 +1,64 @@
+# Project 3 Scenario B - O-RAN RAN monitoring lab.
+# Reuses the Project 2 Open5GS 5G SA core (started separately, see scripts/b01_core_up.sh) and adds
+#   OCUDU gNB (E2 agent) + srsUE (ZeroMQ) + FlexRIC Near-RT RIC + iperf3 data-network endpoint.
+# Addressing plan (unchanged from the guidebook):
+#   RAN 10.20.11.0/24  gNB .10  srsUE .20  FlexRIC .30  KPM xApp .31  custom KPM .32  Edge-AI .33  RM .34
+#   gNB also on Project 2 N2 (10.20.2.11) and N3 (10.20.3.11); UE pool 10.45.0.0/16.
+name: project3-ric-lab
+
+services:
+  flexric:
+    image: telecom-lab-flexric:1.0
+    container_name: project3-flexric
+    command: ["/opt/flexric/build/examples/ric/nearRT-RIC", "-c", "/config/flexric.conf"]
+    tty: true                           # line-buffered stdout so the RIC log is visible with `docker logs`
+    volumes: ["./configs/flexric.conf:/config/flexric.conf:ro"]
+    networks:
+      ran-net: { ipv4_address: 10.20.11.30 }
+    restart: "no"
+
+  gnb:
+    image: aetherproject/ocudu:rel-0.7.0
+    container_name: project3-gnb
+    entrypoint: ["gnb", "-c", "/config/gnb_zmq.yaml"]
+    tty: true
+    cap_add: [SYS_NICE, NET_ADMIN, NET_RAW]
+    volumes:
+      - ./configs/gnb_zmq.yaml:/config/gnb_zmq.yaml:ro
+      - ./results/logs:/logs
+    networks:
+      ran-net: { ipv4_address: 10.20.11.10 }
+      n2-net:  { ipv4_address: 10.20.2.11 }
+      n3-net:  { ipv4_address: 10.20.3.11 }
+    depends_on: [flexric]
+    restart: "no"
+
+  ue:
+    image: aetherproject/srsran-ue:rel-0.7.0
+    container_name: project3-ue
+    tty: true
+    privileged: true                    # creates the ue1 network namespace and tun_srsue
+    working_dir: /config
+    entrypoint: ["/bin/bash", "-c", "ip netns add ue1 2>/dev/null; exec srsue /config/ue_zmq.conf"]
+    volumes: ["./configs/ue_zmq.conf:/config/ue_zmq.conf:ro"]
+    networks:
+      ran-net: { ipv4_address: 10.20.11.20 }
+    depends_on: [gnb]
+    restart: "no"
+
+  # data-network endpoint on N6 with a return route to the UE pool through the UPF
+  dn-iperf3:
+    build: ./dn-iperf3
+    image: telecom-lab-iperf3:1.0
+    container_name: project3-dn-iperf3
+    cap_add: [NET_ADMIN]
+    networks:
+      dn-net: { ipv4_address: 10.20.6.21 }
+    restart: "no"
+
+networks:
+  ran-net:                              # -> project3-ric-lab_ran-net
+    ipam: { config: [{ subnet: 10.20.11.0/24 }] }
+  n2-net: { external: true, name: scenario-b-n2 }   # Project 2 networks
+  n3-net: { external: true, name: scenario-b-n3 }
+  dn-net: { external: true, name: scenario-b-dn }

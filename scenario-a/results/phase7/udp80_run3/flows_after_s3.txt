@@ -1,0 +1,10 @@
+OFPST_FLOW reply (OF1.3) (xid=0x2):
+ cookie=0x0, duration=95.654s, table=0, n_packets=3, n_bytes=238, priority=10,in_port=1,dl_dst=00:00:00:00:00:01 actions=output:3
+ cookie=0x0, duration=95.640s, table=0, n_packets=5, n_bytes=378, priority=10,in_port=3,dl_dst=00:00:00:00:00:03 actions=output:1
+ cookie=0x0, duration=95.619s, table=0, n_packets=140, n_bytes=12796, priority=10,in_port=2,dl_dst=00:00:00:00:00:01 actions=output:3
+ cookie=0x0, duration=95.606s, table=0, n_packets=380023, n_bytes=566026764, priority=10,in_port=3,dl_dst=00:00:00:00:00:04 actions=output:2
+ cookie=0x0, duration=95.579s, table=0, n_packets=3, n_bytes=238, priority=10,in_port=1,dl_dst=00:00:00:00:00:02 actions=output:3
+ cookie=0x0, duration=95.547s, table=0, n_packets=3, n_bytes=238, priority=10,in_port=2,dl_dst=00:00:00:00:00:02 actions=output:3
+ cookie=0x0, duration=95.501s, table=0, n_packets=3, n_bytes=238, priority=10,in_port=2,dl_dst=00:00:00:00:00:03 actions=output:1
+ cookie=0x0, duration=95.496s, table=0, n_packets=2, n_bytes=140, priority=10,in_port=1,dl_dst=00:00:00:00:00:04 actions=output:2
+ cookie=0x0, duration=105.473s, table=0, n_packets=20, n_bytes=1344, priority=0 actions=CONTROLLER:65535

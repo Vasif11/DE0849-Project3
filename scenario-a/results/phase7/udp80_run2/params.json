@@ -1,0 +1,37 @@
+{
+  "name": "udp80_run2",
+  "proto": "udp",
+  "offered_mbps": 80,
+  "duration_s": 10,
+  "src": "h1",
+  "dst": "h4",
+  "dst_ip": "10.0.0.4",
+  "dst_mac": "00:00:00:00:00:04",
+  "port": 5201,
+  "capture": false,
+  "capture_packet_limit": null,
+  "parallel": 1,
+  "repeat": 2,
+  "started": "2026-11-26T04:50:03",
+  "pre_ping_rtt": "8.612/9.510/9.953/0.484",
+  "snapshot_before": {
+    "start": 1795661405.5037255,
+    "end": 1795661405.53083,
+    "mid": 1795661405.8157423,
+    "last_mid": 1795661405.8157423,
+    "reads_to_stabilise": 2
+  },
+  "snapshot_after": {
+    "start": 1795661416.2086413,
+    "end": 1795661416.2327938,
+    "mid": 1795661416.2207174,
+    "last_mid": 1795661416.5244331,
+    "reads_to_stabilise": 3
+  },
+  "iperf_window": {
+    "start": 1795661405.8504531,
+    "end": 1795661415.9117398,
+    "wall_s": 10.061
+  },
+  "observation_interval_s": 10.405
+}

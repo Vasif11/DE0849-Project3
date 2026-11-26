@@ -1,0 +1,14 @@
+experiment,proto,offered_mbps,duration_s,observation_interval_s,receiver_mbps,jitter_ms,lost_packets,lost_percent,retransmits,flow_d_packets,flow_d_bytes,flow_rate_mbps,flow_identical,flow_spread_pkts,isl_match,pcap_udp_packets
+udp50_reference_capture,udp,50,10,10.4,49.95,0.0275,0,0,,43183,64321790,49.478,True,0,True,25000
+udp50_run1,udp,50,10,10.396,49.95,0.012,0,0,,43183,64321792,49.497,True,0,True,
+udp50_run2,udp,50,10,10.407,49.95,0.0307,0,0,,43183,64321793,49.445,True,0,True,
+udp50_run3,udp,50,10,10.738,49.95,0.0411,0,0,,43179,64315833,47.916,True,0,True,
+udp80_run1,udp,80,10,10.414,79.93,0.0275,0,0,,69084,102914284,79.058,True,0,True,
+udp80_run2,udp,80,10,10.405,79.92,0.0251,0,0,,69083,102912790,79.126,True,0,True,
+udp80_run3,udp,80,10,10.4,79.93,0.019,0,0,,69084,102914282,79.165,True,0,True,
+udp100_run1,udp,100,10,10.52,97.1,0.022,1437,1.6644,,84913,126499495,96.197,True,0,True,
+udp100_run2,udp,100,10,10.511,97.1,0.0202,1435,1.6623,,84907,126490555,96.273,True,0,True,
+udp100_run3,udp,100,10,10.515,97.11,0.0333,1435,1.6621,,84916,126503961,96.246,True,0,True,
+tcp_run1,tcp,,10,10.418,94.62,,,,11,26923,123498913,94.835,False,3,True,
+tcp_run2,tcp,,10,10.708,94.25,,,,15,27176,123429160,92.215,True,0,True,
+tcp_run3,tcp,,10,11.021,94.41,,,,31,28211,123858021,89.907,True,0,True,

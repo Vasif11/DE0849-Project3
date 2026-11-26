@@ -1,0 +1,127 @@
+{
+  "name": "udp50_reference_capture",
+  "proto": "udp",
+  "offered_mbps": 50,
+  "duration_s": 10,
+  "observation_interval_s": 10.4,
+  "flow_deltas": [
+    {
+      "switch": "s1",
+      "in_port": 1,
+      "out_port": 3,
+      "found": true,
+      "d_packets_rule": 43183,
+      "d_bytes_rule": 64321790,
+      "d_packets": 43183,
+      "d_bytes": 64321790,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 49.478,
+      "action": "output:3"
+    },
+    {
+      "switch": "s2",
+      "in_port": 1,
+      "out_port": 2,
+      "found": true,
+      "d_packets_rule": 43183,
+      "d_bytes_rule": 64321790,
+      "d_packets": 43183,
+      "d_bytes": 64321790,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 49.478,
+      "action": "output:2"
+    },
+    {
+      "switch": "s3",
+      "in_port": 3,
+      "out_port": 2,
+      "found": true,
+      "d_packets_rule": 43183,
+      "d_bytes_rule": 64321790,
+      "d_packets": 43183,
+      "d_bytes": 64321790,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 49.478,
+      "action": "output:2"
+    }
+  ],
+  "flow_counters_identical_across_switches": true,
+  "flow_packet_spread": 0,
+  "flow_max_relative_spread_percent": 0.0,
+  "snapshot_reads_to_stabilise": {
+    "before": 2,
+    "after": 3
+  },
+  "inter_switch_ports": [
+    {
+      "link": "s1:3->s2:1",
+      "tx_pkts": 43183,
+      "rx_pkts": 43183,
+      "tx_bytes": 64321790,
+      "rx_bytes": 64321790,
+      "match": true
+    },
+    {
+      "link": "s2:1->s1:3",
+      "tx_pkts": 14,
+      "rx_pkts": 14,
+      "tx_bytes": 1249,
+      "rx_bytes": 1249,
+      "match": true
+    },
+    {
+      "link": "s2:2->s3:3",
+      "tx_pkts": 43183,
+      "rx_pkts": 43183,
+      "tx_bytes": 64321790,
+      "rx_bytes": 64321790,
+      "match": true
+    },
+    {
+      "link": "s3:3->s2:2",
+      "tx_pkts": 14,
+      "rx_pkts": 14,
+      "tx_bytes": 1249,
+      "rx_bytes": 1249,
+      "match": true
+    }
+  ],
+  "inter_switch_counters_match": true,
+  "port_drops_errors": {
+    "s1": 0,
+    "s2": 0,
+    "s3": 0
+  },
+  "iperf": {
+    "receiver_mbps": 49.95,
+    "jitter_ms": 0.0275,
+    "lost_packets": 0,
+    "packets": 43168,
+    "lost_percent": 0
+  },
+  "pcap": {
+    "file": "capture_h1.pcap",
+    "size_bytes": 2799974,
+    "packets_in_file": 25000,
+    "packets_matching_udp_flow": 25000,
+    "src": [
+      "10.0.0.1"
+    ],
+    "dst": [
+      "10.0.0.4"
+    ],
+    "protocol": "UDP",
+    "dst_ports": [
+      "5201"
+    ],
+    "frame_len_min": 46,
+    "frame_len_max": 1490,
+    "frame_len_mean": 1489.9,
+    "duration_s": 5.8026,
+    "mean_interarrival_us": 232.1
+  },
+  "note_flow_vs_pcap": "flow rule (dl_dst=00:00:00:00:00:04) counted 43183 packets; the bounded capture holds 25000 UDP-flow packets (capture limit 25000); the aggregate rule also counts the iperf3 TCP control connection and any other frame to 00:00:00:00:00:04."
+}

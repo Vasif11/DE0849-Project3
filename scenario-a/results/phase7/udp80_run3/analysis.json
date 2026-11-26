@@ -1,0 +1,106 @@
+{
+  "name": "udp80_run3",
+  "proto": "udp",
+  "offered_mbps": 80,
+  "duration_s": 10,
+  "observation_interval_s": 10.4,
+  "flow_deltas": [
+    {
+      "switch": "s1",
+      "in_port": 1,
+      "out_port": 3,
+      "found": true,
+      "d_packets_rule": 69084,
+      "d_bytes_rule": 102914282,
+      "d_packets": 69084,
+      "d_bytes": 102914282,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 79.165,
+      "action": "output:3"
+    },
+    {
+      "switch": "s2",
+      "in_port": 1,
+      "out_port": 2,
+      "found": true,
+      "d_packets_rule": 69084,
+      "d_bytes_rule": 102914282,
+      "d_packets": 69084,
+      "d_bytes": 102914282,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 79.165,
+      "action": "output:2"
+    },
+    {
+      "switch": "s3",
+      "in_port": 3,
+      "out_port": 2,
+      "found": true,
+      "d_packets_rule": 69084,
+      "d_bytes_rule": 102914282,
+      "d_packets": 69084,
+      "d_bytes": 102914282,
+      "extra_other_ingress_packets": 0,
+      "extra_other_ingress_bytes": 0,
+      "rate_mbps": 79.165,
+      "action": "output:2"
+    }
+  ],
+  "flow_counters_identical_across_switches": true,
+  "flow_packet_spread": 0,
+  "flow_max_relative_spread_percent": 0.0,
+  "snapshot_reads_to_stabilise": {
+    "before": 2,
+    "after": 3
+  },
+  "inter_switch_ports": [
+    {
+      "link": "s1:3->s2:1",
+      "tx_pkts": 69084,
+      "rx_pkts": 69084,
+      "tx_bytes": 102914282,
+      "rx_bytes": 102914282,
+      "match": true
+    },
+    {
+      "link": "s2:1->s1:3",
+      "tx_pkts": 14,
+      "rx_pkts": 14,
+      "tx_bytes": 1250,
+      "rx_bytes": 1250,
+      "match": true
+    },
+    {
+      "link": "s2:2->s3:3",
+      "tx_pkts": 69084,
+      "rx_pkts": 69084,
+      "tx_bytes": 102914282,
+      "rx_bytes": 102914282,
+      "match": true
+    },
+    {
+      "link": "s3:3->s2:2",
+      "tx_pkts": 14,
+      "rx_pkts": 14,
+      "tx_bytes": 1250,
+      "rx_bytes": 1250,
+      "match": true
+    }
+  ],
+  "inter_switch_counters_match": true,
+  "port_drops_errors": {
+    "s1": 0,
+    "s2": 0,
+    "s3": 0
+  },
+  "iperf": {
+    "receiver_mbps": 79.93,
+    "jitter_ms": 0.019,
+    "lost_packets": 0,
+    "packets": 69069,
+    "lost_percent": 0
+  },
+  "pcap": null
+}

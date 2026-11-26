@@ -1,0 +1,37 @@
+{
+  "name": "tcp_run2",
+  "proto": "tcp",
+  "offered_mbps": null,
+  "duration_s": 10,
+  "src": "h1",
+  "dst": "h4",
+  "dst_ip": "10.0.0.4",
+  "dst_mac": "00:00:00:00:00:04",
+  "port": 5201,
+  "capture": false,
+  "capture_packet_limit": null,
+  "parallel": 1,
+  "repeat": 2,
+  "started": "2026-11-26T04:51:21",
+  "pre_ping_rtt": "8.512/9.406/10.001/0.546",
+  "snapshot_before": {
+    "start": 1795661483.4197955,
+    "end": 1795661483.4421284,
+    "mid": 1795661483.7255173,
+    "last_mid": 1795661483.7255173,
+    "reads_to_stabilise": 2
+  },
+  "snapshot_after": {
+    "start": 1795661494.4210181,
+    "end": 1795661494.4456823,
+    "mid": 1795661494.43335,
+    "last_mid": 1795661494.736762,
+    "reads_to_stabilise": 3
+  },
+  "iperf_window": {
+    "start": 1795661483.756873,
+    "end": 1795661494.1229932,
+    "wall_s": 10.366
+  },
+  "observation_interval_s": 10.708
+}

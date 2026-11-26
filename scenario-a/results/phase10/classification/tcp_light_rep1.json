@@ -1,0 +1,29 @@
+{
+ "plan": {
+  "name": "tcp_light",
+  "src": "h2",
+  "dst": "h3",
+  "port": 5202,
+  "proto": "tcp",
+  "args": "-b 2M",
+  "true_class": "tcp_light"
+ },
+ "flow": "tcp 10.0.0.2:57704->10.0.0.3:5202",
+ "decisions": [
+  {
+   "ts": 1795661544.334,
+   "dpid": "0000000000000002",
+   "flow": "tcp 10.0.0.2:57704->10.0.0.3:5202",
+   "proto": "tcp",
+   "rate_mbps": 2.151,
+   "avg_pkt_bytes": 2493.3,
+   "d_packets": 108,
+   "d_bytes": 269272,
+   "interval_s": 1.001,
+   "flow_age_s": 2,
+   "cls": "tcp_light",
+   "features": "proto,rate,avg_pkt_size,counters",
+   "model": "rule-based-v1"
+  }
+ ]
+}

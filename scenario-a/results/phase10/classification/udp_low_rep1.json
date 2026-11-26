@@ -1,0 +1,29 @@
+{
+ "plan": {
+  "name": "udp_low",
+  "src": "h2",
+  "dst": "h3",
+  "port": 5204,
+  "proto": "udp",
+  "args": "-b 3M",
+  "true_class": "udp_low_rate"
+ },
+ "flow": "udp 10.0.0.2:35608->10.0.0.3:5204",
+ "decisions": [
+  {
+   "ts": 1795661571.362,
+   "dpid": "0000000000000002",
+   "flow": "udp 10.0.0.2:35608->10.0.0.3:5204",
+   "proto": "udp",
+   "rate_mbps": 3.082,
+   "avg_pkt_bytes": 1490.0,
+   "d_packets": 259,
+   "d_bytes": 385910,
+   "interval_s": 1.002,
+   "flow_age_s": 2,
+   "cls": "udp_low_rate",
+   "features": "proto,rate,avg_pkt_size,counters",
+   "model": "rule-based-v1"
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+OFPST_METER reply (OF1.3) (xid=0x2):
+meter:1 flow_count:1 packet_in_count:29040 byte_in_count:43269600 duration:33.611s bands:
+0: packet_count:5 byte_count:7450

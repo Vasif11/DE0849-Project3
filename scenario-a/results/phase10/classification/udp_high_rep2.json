@@ -1,0 +1,29 @@
+{
+ "plan": {
+  "name": "udp_high",
+  "src": "h1",
+  "dst": "h4",
+  "port": 5203,
+  "proto": "udp",
+  "args": "-b 40M",
+  "true_class": "udp_high_rate"
+ },
+ "flow": "udp 10.0.0.1:56287->10.0.0.4:5203",
+ "decisions": [
+  {
+   "ts": 1795661612.404,
+   "dpid": "0000000000000002",
+   "flow": "udp 10.0.0.1:56287->10.0.0.4:5203",
+   "proto": "udp",
+   "rate_mbps": 41.171,
+   "avg_pkt_bytes": 1490.0,
+   "d_packets": 3459,
+   "d_bytes": 5153910,
+   "interval_s": 1.001,
+   "flow_age_s": 2,
+   "cls": "udp_high_rate",
+   "features": "proto,rate,avg_pkt_size,counters",
+   "model": "rule-based-v1"
+  }
+ ]
+}

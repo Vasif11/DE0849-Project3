@@ -1,0 +1,26 @@
+[
+ {
+  "ts": 1795661772.598,
+  "dpid": "0000000000000001",
+  "flow": "udp 10.0.0.2:37178->10.0.0.3:5202",
+  "action": "meter 1 drop>30000kbps",
+  "policy": "cap udp_high_rate",
+  "mode": "ENFORCED"
+ },
+ {
+  "ts": 1795661772.6,
+  "dpid": "0000000000000003",
+  "flow": "udp 10.0.0.2:37178->10.0.0.3:5202",
+  "action": "meter 1 drop>30000kbps",
+  "policy": "cap udp_high_rate",
+  "mode": "ENFORCED"
+ },
+ {
+  "ts": 1795661772.6,
+  "dpid": "0000000000000002",
+  "flow": "udp 10.0.0.2:37178->10.0.0.3:5202",
+  "action": "meter 1 drop>30000kbps",
+  "policy": "cap udp_high_rate",
+  "mode": "ENFORCED"
+ }
+]

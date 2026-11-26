@@ -1,0 +1,9 @@
+run,flow,true_class,predicted,correct,rate_mbps_at_decision,avg_pkt_bytes,decision_flow_age_s,n_decisions
+tcp_bulk_rep1,tcp 10.0.0.1:44062->10.0.0.4:5201,tcp_bulk,tcp_bulk,True,99.014,1882.0,2,1
+tcp_light_rep1,tcp 10.0.0.2:57704->10.0.0.3:5202,tcp_light,tcp_light,True,2.151,2493.3,2,1
+udp_high_rep1,udp 10.0.0.1:41860->10.0.0.4:5203,udp_high_rate,udp_high_rate,True,41.17,1490.0,2,1
+udp_low_rep1,udp 10.0.0.2:35608->10.0.0.3:5204,udp_low_rate,udp_low_rate,True,3.082,1490.0,2,1
+tcp_bulk_rep2,tcp 10.0.0.1:39544->10.0.0.4:5201,tcp_bulk,tcp_bulk,True,98.399,2111.9,2,1
+tcp_light_rep2,tcp 10.0.0.2:48930->10.0.0.3:5202,tcp_light,tcp_light,True,2.137,3011.4,2,1
+udp_high_rep2,udp 10.0.0.1:56287->10.0.0.4:5203,udp_high_rate,udp_high_rate,True,41.171,1490.0,2,1
+udp_low_rep2,udp 10.0.0.2:38343->10.0.0.3:5204,udp_low_rate,udp_low_rate,True,3.075,1490.0,2,1

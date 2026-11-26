@@ -1,0 +1,29 @@
+{
+ "plan": {
+  "name": "tcp_bulk",
+  "src": "h1",
+  "dst": "h4",
+  "port": 5201,
+  "proto": "tcp",
+  "args": "",
+  "true_class": "tcp_bulk"
+ },
+ "flow": "tcp 10.0.0.1:44062->10.0.0.4:5201",
+ "decisions": [
+  {
+   "ts": 1795661531.321,
+   "dpid": "0000000000000002",
+   "flow": "tcp 10.0.0.1:44062->10.0.0.4:5201",
+   "proto": "tcp",
+   "rate_mbps": 99.014,
+   "avg_pkt_bytes": 1882.0,
+   "d_packets": 6587,
+   "d_bytes": 12396670,
+   "interval_s": 1.002,
+   "flow_age_s": 2,
+   "cls": "tcp_bulk",
+   "features": "proto,rate,avg_pkt_size,counters",
+   "model": "rule-based-v1"
+  }
+ ]
+}

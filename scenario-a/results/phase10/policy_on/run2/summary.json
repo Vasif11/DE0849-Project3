@@ -1,0 +1,17 @@
+{
+ "label": "policy_on",
+ "rep": 2,
+ "policy": "ON",
+ "tcp_alone_mbps": 110.46,
+ "tcp_overlap_first4s_mbps": 38.53,
+ "tcp_overlap_steady_mbps": 67.22,
+ "udp_delivered_first4s_mbps": 53.84,
+ "udp_delivered_steady_mbps": 29.92,
+ "udp_offered_mbps": 80,
+ "udp_sender_lost_percent": 55.07,
+ "tcp_retransmits": 1071,
+ "tcp_avg_receiver_mbps": 70.2,
+ "ping_avg_ms": 52.244,
+ "ping_max_ms": 138.399,
+ "ping_mdev_ms": 38.557
+}
